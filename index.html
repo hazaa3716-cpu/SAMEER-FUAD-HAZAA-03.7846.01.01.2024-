@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swahili Food Ordering with Advanced Features</title>
+  <style>
+    /* --- CSS styles --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-color: #fff8f0;
+      color: #4b3b2b;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #d2691e;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+      flex-grow: 1;
+    }
+
+    .navbar a, .navbar button.logout-btn {
+      color: #fff8f0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+
+    .navbar a:hover,
+    .navbar a.active,
+    .navbar button.logout-btn:hover {
+      color: #ffa500;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #ffa500, #d2691e);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 2rem;
+      border-radius: 0 0 30px 30px;
+      margin-bottom: 2rem;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      max-width: 600px;
+      margin: 2rem auto 4rem auto;
+      background-color: #fff3e0;
+      padding: 1.5rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(210, 105, 30, 0.3);
+      text-align: center;
+      font-weight: 600;
+      color: #4b3b2b;
+    }
+
+    .contact-section h3 {
+      margin-bottom: 1rem;
+      color: #d2691e;
+    }
+
+    .contact-links a {
+      display: inline-block;
+      margin: 0 1rem;
+      color: #d2691e;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid #d2691e;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-links a:hover {
+      background-color: #d2691e;
+      color: #fff8f0;
+    }
+
+    /* Login Page */
+    .login-container {
+      max-width: 400px;
+      margin: 5rem auto;
+      background-color: #fff3e0;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(210, 105, 30, 0.3);
+    }
+
+    .login-container h1 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #d2691e;
+    }
+
+    .login-container label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid #d2691e;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #ffa500;
+      border: none;
+      border-radius: 5px;
+      color: #4b3b2b;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #d2691e;
+      color: #fff8f0;
+    }
+
+    .error-message {
+      color: #b00020;
+      font-weight: 600;
+      text-align: center;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Menu Section */
+    .menu-section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .menu-section h2,
+    .menu-section h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #d2691e;
+    }
+
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      background-color: #fff3e0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(210, 105, 30, 0.2);
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-card .image-placeholder {
+      background-color: #d2691e;
+      color: #fff8f0;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .menu-card h4 {
+      margin-bottom: 0.5rem;
+      color: #4b3b2b;
+    }
+
+    .menu-card p.price {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #d2691e;
+    }
+
+    .menu-card .rating {
+      margin-bottom: 0.5rem;
+      color: #ffa500;
+      font-weight: 600;
+    }
+
+    .menu-card button {
+      background-color: #ffa500;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: 700;
+      color: #4b3b2b;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card button:hover {
+      background-color: #d2691e;
+      color: #fff8f0;
+    }
+
+    .menu-card .fav-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #d2691e;
+      transition: color 0.3s ease;
+    }
+
+    .menu-card .fav-btn.favorited {
+      color: #ffa500;
+    }
+
+    /* Cart Page */
+    #cart-items {
+      max-width: 700px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .cart-item {
+      background-color: #fff3e0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(210, 105, 30, 0.2);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-item p {
+      margin: 0 0.5rem;
+      font-weight: 600;
+      color: #4b3b2b;
+    }
+
+    .cart-item button {
+      background-color: #b00020;
+      border: none;
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-item button:hover {
+      background-color: #7a0015;
+    }
+
+    .cart-summary {
+      max-width: 700px;
+      margin: 1rem auto;
+      padding: 1rem;
+      background-color: #fff3e0;
+      border-radius: 10px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #d2691e;
+    }
+
+    .cart-summary button {
+      background-color: #ffa500;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      font-weight: 700;
+      color: #4b3b2b;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 1rem;
+    }
+
+    .cart-summary button:hover {
+      background-color: #d2691e;
+      color: #fff8f0;
+    }
+
+    .confirmation-message {
+      text-align: center;
+      font-weight: 700;
+      color: #2e7d32;
+      margin-top: 1rem;
+    }
+
+    /* Delivery Form */
+    #delivery-form {
+      max-width: 700px;
+      margin: 1rem auto 3rem auto;
+      background-color: #fff3e0;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(210, 105, 30, 0.3);
+    }
+
+    #delivery-form h3 {
+      color: #d2691e;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    #delivery-form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      color: #4b3b2b;
+    }
+
+    #delivery-form input, #delivery-form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid #d2691e;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    #delivery-form button {
+      background-color: #ffa500;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      font-weight: 700;
+      color: #4b3b2b;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #delivery-form button:hover {
+      background-color: #d2691e;
+      color: #fff8f0;
+    }
+
+    /* Notifications */
+    #notification {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #d2691e;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1000;
+      font-weight: 700;
+    }
+
+    /* Search Suggestions */
+    #search-suggestions {
+      position: absolute;
+      background: white;
+      border: 1px solid #d2691e;
+      border-radius: 5px;
+      max-width: 300px;
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    #search-suggestions div {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+    #search-suggestions div:hover,
+    #search-suggestions div.active {
+      background-color: #d2691e;
+      color: white;
+    }
+
+    /* Live Chat Button */
+    #live-chat-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #d2691e;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    /* Live Chat Window */
+    #live-chat-window {
+      position: fixed;
+      bottom: 80px;
+      right: 1.5rem;
+      width: 320px;
+      max-height: 400px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+    #live-chat-header {
+      background-color: #d2691e;
+      color: white;
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #live-chat-messages {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    #live-chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    #live-chat-input textarea {
+      flex-grow: 1;
+      resize: none;
+      padding: 0.5rem;
+      border: none;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    #live-chat-input button {
+      background-color: #ffa500;
+      border: none;
+      padding: 0 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      color: #4b3b2b;
+      transition: background-color 0.3s ease;
+    }
+    #live-chat-input button:hover {
+      background-color: #d2691e;
+      color: #fff8f0;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .navbar ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .menu-items {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        font-size: 1.5rem;
+        padding: 3rem 1rem;
+      }
+
+      .login-container {
+        margin: 3rem 1rem;
+      }
+
+      #live-chat-window {
+        width: 90vw;
+        right: 5%;
+        bottom: 80px;
+      }
+    }
+
+    /* Hide all pages by default */
+    .page {
+      display: none;
+    }
+
+    /* Show active page */
+    .active-page {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Notification -->
+  <div id="notification" role="alert" aria-live="assertive"></div>
+
+  <!-- Navigation bar (hidden on login page) -->
+  <header id="header" style="display:none;">
+    <nav class="navbar">
+      <ul>
+        <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+        <li><a href="#" class="nav-link" data-page="menu">Menu</a></li>
+        <li><a href="#" class="nav-link" data-page="cart">Cart</a></li>
+        <li><a href="#" class="nav-link" data-page="delivery">Delivery Info</a></li>
+      </ul>
+      <button class="logout-btn" id="logoutBtn" title="Logout">Logout</button>
+    </nav>
+  </header>
+
+  <!-- Login Page -->
+  <main id="login" class="page active-page">
+    <section class="login-container">
+      <h1>Login to Swahili Food Ordering</h1>
+      <form id="loginForm" novalidate>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required autocomplete="username" />
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="current-password" />
+        
+        <button type="submit">Login</button>
+      </form>
+      <p id="errorMsg" class="error-message" role="alert"></p>
+    </section>
+  </main>
+
+  <!-- Home Page -->
+  <main id="home" class="page">
+    <section class="hero">
+      <h1>Welcome!</h1>
+      <p>Delicious traditional Swahili dishes delivered to your doorstep.</p>
+    </section>
+    <section class="contact-section">
+      <h3>Contact Us</h3>
+      <div class="contact-links">
+        <a href="https://wa.me/255757816565" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">WhatsApp</a>
+        <a href="https://maps.app.goo.gl/bBPRzqbe6BLjwRiP9" target="_blank" rel="noopener" aria-label="Find us on Google Maps">Google Maps</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Menu Page -->
+  <main id="menu" class="page" style="position:relative;">
+    <h2>Swahili Food Menu</h2>
+    <section class="menu-section" style="position:relative;">
+      <div style="position:relative; max-width:300px; margin:0 auto 1rem auto;">
+        <input type="text" id="searchInput" placeholder="Search foods or drinks..." aria-label="Search foods or drinks" autocomplete="off" style="width:100%; padding:0.5rem; border-radius:5px; border:1px solid #d2691e; font-size:1rem;" />
+        <div id="search-suggestions" role="listbox" aria-label="Search suggestions"></div>
+      </div>
+      <h3>Foods</h3>
+      <div class="menu-items" id="food-items"></div>
+
+      <h3>Drinks</h3>
+      <div class="menu-items" id="drink-items"></div>
+    </section>
+  </main>
+
+  <!-- Cart Page -->
+  <main id="cart" class="page">
+    <h2>Your Cart</h2>
+    <section id="cart-items"></section>
+    <div class="cart-summary">
+      <p>Total: <span id="total-price">0</span> TZS</p>
+      <button id="checkout-btn">Checkout</button>
+    </div>
+    <p id="checkout-message" class="confirmation-message"></p>
+  </main>
+
+  <!-- Delivery Info Page -->
+  <main id="delivery" class="page">
+    <h2>Delivery Information</h2>
+    <form id="delivery-form" novalidate>
+      <h3>Enter your delivery details</h3>
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+255 7XX XXX XXX" required pattern="^\+255\s7\d{2}\s\d{3}\s\d{3}$" />
+      
+      <label for="address">Delivery Address</label>
+      <textarea id="address" name="address" placeholder="Enter your delivery address" required></textarea>
+      
+      <label for="location">Your Location (optional)</label>
+      <button type="button" id="getLocationBtn">Get My Location</button>
+      <p id="location-status" style="color:#4b3b2b; font-weight:600; margin-top:0.5rem;"></p>
+      
+      <input type="hidden" id="latitude" name="latitude" />
+      <input type="hidden" id="longitude" name="longitude" />
+      
+      <button type="submit">Submit Delivery Info</button>
+    </form>
+    <p id="delivery-message" class="confirmation-message"></p>
+    <p id="call-link-container" style="text-align:center; margin-top:1rem;"></p>
+  </main>
+
+  <!-- Live Chat Button -->
+  <button id="live-chat-btn" aria-label="Open live chat support">💬</button>
+
+  <!-- Live Chat Window -->
+  <div id="live-chat-window" role="dialog" aria-modal="true" aria-labelledby="live-chat-header">
+    <div id="live-chat-header">
+      Live Support
+      <button id="live-chat-close" aria-label="Close live chat">✖</button>
+    </div>
+    <div id="live-chat-messages" aria-live="polite" aria-atomic="false"></div>
+    <div id="live-chat-input">
+      <textarea id="live-chat-textarea" rows="2" placeholder="Type your message..." aria-label="Type your message"></textarea>
+      <button id="live-chat-send" aria-label="Send message">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // Data for menu items with ratings, reviews, discounts, and image paths
+    const foods = [
+      { id:1, name: "Ugali", price: 3000, rating: 4.5, reviews: 120, discount: 0, image: "images/ugali.jpg" },
+      { id:2, name: "Pilau", price: 5000, rating: 4.7, reviews: 95, discount: 10, image: "images/pilau.jpg" },
+      { id:3, name: "Samosa", price: 500, rating: 4.3, reviews: 200, discount: 0, image: "images/samosa.jpg" },
+      { id:4, name: "Wali Samaki", price: 5000, rating: 4.8, reviews: 80, discount: 5, image: "images/wali-samaki.jpg" },
+      { id:5, name: "Wali wa Nazi", price: 3000, rating: 4.4, reviews: 110, discount: 0, image: "images/wali-nazi.jpg" },
+      { id:6, name: "Mahamri", price: 500, rating: 4.2, reviews: 70, discount: 0, image: "images/mahamri.jpg" },
+      { id:7, name: "Mishkaki", price: 1000, rating: 4.6, reviews: 130, discount: 15, image: "images/mishkaki.jpg" },
+      { id:8, name: "Ndizi za kuKaanga", price: 500, rating: 4.1, reviews: 60, discount: 0, image: "images/ndizi-kaanga.jpg" },
+      { id:9, name: "Kuku", price: 6000, rating: 4.7, reviews: 90, discount: 0, image: "images/kuku.jpg" },
+      { id:10, name: "Chipsi", price: 3000, rating: 4.3, reviews: 100, discount: 0, image: "images/chipsi.jpg" },
+      { id:11, name: "Nyama Choma", price: 7000, rating: 4.8, reviews: 150, discount: 0, image: "images/nyama-choma.jpg" },
+      { id:12, name: "Beans", price: 2000, rating: 4.4, reviews: 85, discount: 5, image: "images/beans.jpg" },
+      { id:13, name: "Sukuma Wiki", price: 1500, rating: 4.3, reviews: 75, discount: 0, image: "images/sukuma-wiki.jpg" },
+      { id:14, name: "Kienyeji", price: 4000, rating: 4.6, reviews: 95, discount: 0, image: "images/kienyeji.jpg" },
+      { id:15, name: "Mchuzi wa Samaki", price: 6500, rating: 4.7, reviews: 110, discount: 8, image: "images/mchuzi-samaki.jpg" },
+      { id:16, name: "Biriani", price: 5500, rating: 4.9, reviews: 140, discount: 0, image: "images/biriani.jpg" },
+      { id:17, name: "Mkate wa Kumimina", price: 1000, rating: 4.2, reviews: 60, discount: 0, image: "images/mkate-kumimina.jpg" },
+      { id:18, name: "Urojo", price: 2000, rating: 4.5, reviews: 120, discount: 10, image: "images/urojo.jpg" },
+      { id:19, name: "Maharagwe", price: 2500, rating: 4.4, reviews: 70, discount: 0, image: "images/maharagwe.jpg" },
+      { id:20, name: "Biryani ya Kuku", price: 6000, rating: 4.8, reviews: 125, discount: 5, image: "images/biryani-kuku.jpg" }
+    ];
+
+    const drinks = [
+      { id:101, name: "Chai ya Tangawizi", price: 500, rating: 4.5, reviews: 150, discount: 0, image: "images/chai-tangawizi.jpg" },
+      { id:102, name: "Maji", price: 500, rating: 4.2, reviews: 90, discount: 0, image: "images/maji.jpg" },
+      { id:103, name: "Kahawa", price: 500, rating: 4.6, reviews: 120, discount: 5, image: "images/kahawa.jpg" },
+      { id:104, name: "Juice ya Matunda", price: 500, rating: 4.7, reviews: 110, discount: 0, image: "images/juice-matunda.jpg" },
+      { id:105, name: "Soda", price: 600, rating: 4.0, reviews: 80, discount: 0, image: "images/soda.jpg" },
+      { id:106, name: "Maziwa Freshi", price: 1000, rating: 4.3, reviews: 70, discount: 0, image: "images/maziwa-freshi.jpg" },
+      { id:107, name: "Milk shake", price: 2000, rating: 4.4, reviews: 65, discount: 10, image: "images/milk-shake.jpg" },
+      { id:108, name: "Maziwa mgando", price: 1000, rating: 4.5, reviews: 75, discount: 0, image: "images/maziwa-mgando.jpg" }
+    ];
+    
+    // Cart data
+    let cart = [];
+
+    // Favorites (wishlist)
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Search history
+    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+    // Pages
+    const pages = ['login', 'home', 'menu', 'cart', 'delivery'];
+
+    // Elements
+    const loginPage = document.getElementById('login');
+    const homePage = document.getElementById('home');
+    const menuPage = document.getElementById('menu');
+    const cartPage = document.getElementById('cart');
+    const deliveryPage = document.getElementById('delivery');
+    const header = document.getElementById('header');
+    const errorMsg = document.getElementById('errorMsg');
+    const foodItemsContainer = document.getElementById('food-items');
+    const drinkItemsContainer = document.getElementById('drink-items');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalPriceElem = document.getElementById('total-price');
+    const checkoutMessage = document.getElementById('checkout-message');
+    const deliveryForm = document.getElementById('delivery-form');
+    const deliveryMessage = document.getElementById('delivery-message');
+    const locationStatus = document.getElementById('location-status');
+    const callLinkContainer = document.getElementById('call-link-container');
+    const notification = document.getElementById('notification');
+    const searchInput = document.getElementById('searchInput');
+    const searchSuggestions = document.getElementById('search-suggestions');
+
+    // Live chat elements
+    const liveChatBtn = document.getElementById('live-chat-btn');
+    const liveChatWindow = document.getElementById('live-chat-window');
+    const liveChatClose = document.getElementById('live-chat-close');
+    const liveChatMessages = document.getElementById('live-chat-messages');
+    const liveChatTextarea = document.getElementById('live-chat-textarea');
+    const liveChatSend = document.getElementById('live-chat-send');
+
+    // Show page function
+    function showPage(pageId) {
+      pages.forEach(page => {
+        document.getElementById(page).classList.remove('active-page');
+      });
+      document.getElementById(pageId).classList.add('active-page');
+
+      // Show/hide header based on login state
+      if (pageId === 'login') {
+        header.style.display = 'none';
+      } else {
+        header.style.display = 'block';
+      }
+      // Clear messages on page switch
+      errorMsg.textContent = '';
+      checkoutMessage.textContent = '';
+      deliveryMessage.textContent = '';
+      locationStatus.textContent = '';
+      callLinkContainer.innerHTML = '';
+      hideNotification();
+      clearSearchSuggestions();
+    }
+
+    // Show notification
+    function showNotification(message) {
+      notification.textContent = message;
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 4000);
+    }
+    function hideNotification() {
+      notification.style.display = 'none';
+    }
+
+    // Render menu items with ratings, discounts, favorites
+    function renderMenuItems(filter = '') {
+      function renderCard(item) {
+        const discountedPrice = item.discount ? Math.round(item.price * (1 - item.discount / 100)) : item.price;
+        const isFav = favorites.includes(item.id);
+        return `
+          <div class="menu-card" data-id="${item.id}">
+            <button class="fav-btn ${isFav ? 'favorited' : ''}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
+              ${isFav ? '★' : '☆'}
+            </button>
+            <div class="image-placeholder">Image</div>
+            <h4>${item.name}</h4>
+            <p class="price">${discountedPrice} TZS${item.discount ? ` <small style="text-decoration:line-through; color:#a0522d;">${item.price} TZS</small>` : ''}</p>
+            <p class="rating">⭐ ${item.rating} (${item.reviews})</p>
+            <button class="add-cart-btn">Add to Cart</button>
+          </div>
+        `;
+      }
+
+      const filteredFoods = foods.filter(f => f.name.toLowerCase().includes(filter.toLowerCase()));
+      const filteredDrinks = drinks.filter(d => d.name.toLowerCase().includes(filter.toLowerCase()));
+
+      foodItemsContainer.innerHTML = filteredFoods.map(renderCard).join('') || '<p>No foods found.</p>';
+      drinkItemsContainer.innerHTML = filteredDrinks.map(renderCard).join('') || '<p>No drinks found.</p>';
+
+      // Add event listeners for add to cart and favorites
+      document.querySelectorAll('.menu-card').forEach(card => {
+        const id = parseInt(card.dataset.id);
+        const favBtn = card.querySelector('.fav-btn');
+        const addCartBtn = card.querySelector('.add-cart-btn');
+
+        favBtn.onclick = () => toggleFavorite(id, favBtn);
+        addCartBtn.onclick = () => {
+          const item = foods.find(f => f.id === id) || drinks.find(d => d.id === id);
+          if (item) addToCart(item);
+        };
+      });
+    }
+
+    // Toggle favorite
+    function toggleFavorite(id, button) {
+      const index = favorites.indexOf(id);
+      if (index === -1) {
+        favorites.push(id);
+        button.classList.add('favorited');
+        button.textContent = '★';
+        showNotification('Added to favorites');
+      } else {
+        favorites.splice(index, 1);
+        button.classList.remove('favorited');
+        button.textContent = '☆';
+        showNotification('Removed from favorites');
+      }
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+
+    // Add item to cart
+    function addToCart(item) {
+      const existing = cart.find(i => i.id === item.id);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+      showNotification(`${item.name} added to cart.`);
+      renderCart();
+    }
+
+    // Render cart items
+    function renderCart() {
+      cartItemsContainer.innerHTML = '';
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+        totalPriceElem.textContent = '0';
+        checkoutMessage.textContent = '';
+        return;
+      }
+      cart.forEach((item, index) => {
+        const discountedPrice = item.discount ? Math.round(item.price * (1 - item.discount / 100)) : item.price;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <p>${item.name} x ${item.quantity}</p>
+          <p>${discountedPrice * item.quantity} TZS</p>
+          <button aria-label="Remove ${item.name} from cart">Remove</button>
+        `;
+        div.querySelector('button').addEventListener('click', () => {
+          removeFromCart(index);
+        });
+        cartItemsContainer.appendChild(div);
+      });
+      const total = cart.reduce((sum, item) => {
+        const price = item.discount ? Math.round(item.price * (1 - item.discount / 100)) : item.price;
+        return sum + price * item.quantity;
+      }, 0);
+      totalPriceElem.textContent = total;
+      checkoutMessage.textContent = '';
+    }
+
+    // Remove item from cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    // Handle checkout
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty.');
+        return;
+      }
+      showPage('delivery');
+    }
+
+    // Login form handling
+    document.getElementById('loginForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const username = e.target.username.value.trim();
+      const password = e.target.password.value.trim();
+      if (username === '' || password === '') {
+        errorMsg.textContent = 'Please enter username and password.';
+        return;
+      }
+      // For demo, accept any username/password
+      errorMsg.textContent = '';
+      showPage('home');
+      renderMenuItems();
+    });
+
+    // Navigation links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const page = e.target.dataset.page;
+        showPage(page);
+        if (page === 'menu') renderMenuItems();
+        if (page === 'cart') renderCart();
+        checkoutMessage.textContent = '';
+      });
+    });
+
+    // Logout button
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      showPage('login');
+      cart = [];
+      checkoutMessage.textContent = '';
+      errorMsg.textContent = '';
+      document.getElementById('loginForm').reset();
+    });
+
+    // Checkout button
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      checkout();
+    });
+
+    // Delivery form handling
+    deliveryForm.addEventListener('submit', e => {
+      e.preventDefault();
+      deliveryMessage.textContent = '';
+      callLinkContainer.innerHTML = '';
+      const phone = deliveryForm.phone.value.trim();
+      const address = deliveryForm.address.value.trim();
+      if (!phone.match(/^\+255\s7\d{2}\s\d{3}\s\d{3}$/)) {
+        alert('Please enter a valid Tanzanian phone number in format +255 7XX XXX XXX');
+        return;
+      }
+      if (address.length < 5) {
+        alert('Please enter a valid delivery address.');
+        return;
+      }
+      // Show confirmation
+      deliveryMessage.textContent = 'Thank you! Your order and delivery info have been received.';
+      // Show clickable phone link for delivery contact
+      callLinkContainer.innerHTML = `<a href="tel:${phone}" style="font-weight:bold; color:#d2691e;">Call to confirm delivery: ${phone}</a>`;
+      // Clear cart after order
+      cart = [];
+      renderCart();
+      showNotification('Order placed successfully!');
+    });
+
+    // Get location button
+    document.getElementById('getLocationBtn').addEventListener('click', () => {
+      locationStatus.textContent = 'Getting location...';
+      if (!navigator.geolocation) {
+        locationStatus.textContent = 'Geolocation is not supported by your browser.';
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude.toFixed(6);
+          const lon = position.coords.longitude.toFixed(6);
+          deliveryForm.latitude.value = lat;
+          deliveryForm.longitude.value = lon;
+          locationStatus.textContent = `Location captured: Latitude ${lat}, Longitude ${lon}`;
+        },
+        error => {
+          locationStatus.textContent = 'Unable to retrieve your location.';
+        }
+      );
+    });
+
+    // Search with history and suggestions
+    const allItems = [...foods, ...drinks];
+    searchInput.addEventListener('input', () => {
+      const val = searchInput.value.trim().toLowerCase();
+      if (!val) {
+        clearSearchSuggestions();
+        return;
+      }
+      const suggestions = allItems.filter(item => item.name.toLowerCase().includes(val)).slice(0, 5);
+      renderSearchSuggestions(suggestions);
+    });
+
+    function renderSearchSuggestions(suggestions) {
+      searchSuggestions.innerHTML = '';
+      if (suggestions.length === 0) {
+        searchSuggestions.style.display = 'none';
+        return;
+      }
+      suggestions.forEach(item => {
+        const div = document.createElement('div');
+        div.textContent = item.name;
+        div.tabIndex = 0;
+        div.addEventListener('click', () => {
+          searchInput.value = item.name;
+          clearSearchSuggestions();
+          renderMenuItems(item.name);
+          addToSearchHistory(item.name);
+        });
+        div.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            div.click();
+          }
+        });
+        searchSuggestions.appendChild(div);
+      });
+      searchSuggestions.style.display = 'block';
+    }
+
+    function clearSearchSuggestions() {
+      searchSuggestions.innerHTML = '';
+      searchSuggestions.style.display = 'none';
+    }
+
+    // Search history stored in localStorage
+    function addToSearchHistory(term) {
+      if (!term) return;
+      if (!searchHistory.includes(term)) {
+        searchHistory.unshift(term);
+        if (searchHistory.length > 10) searchHistory.pop();
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+      }
+    }
+
+    // Live chat support (simple simulation)
+    liveChatBtn.addEventListener('click', () => {
+      liveChatWindow.style.display = 'flex';
+      liveChatTextarea.focus();
+    });
+
+    liveChatClose.addEventListener('click', () => {
+      liveChatWindow.style.display = 'none';
+    });
+
+    liveChatSend.addEventListener('click', sendLiveChatMessage);
+    liveChatTextarea.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendLiveChatMessage();
+      }
+    });
+
+    function sendLiveChatMessage() {
+      const msg = liveChatTextarea.value.trim();
+      if (!msg) return;
+      appendLiveChatMessage('You', msg);
+      liveChatTextarea.value = '';
+      // Simulate support reply
+      setTimeout(() => {
+        appendLiveChatMessage('Support', 'Thank you for your message! We will get back to you shortly.');
+      }, 1500);
+    }
+
+    function appendLiveChatMessage(sender, message) {
+      const p = document.createElement('p');
+      p.style.margin = '0.3rem 0';
+      p.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      liveChatMessages.appendChild(p);
+      liveChatMessages.scrollTop = liveChatMessages.scrollHeight;
+    }
+
+    // Initialize page
+    showPage('login');
+  </script>
+</body>
+</html>
+
+
+
+
