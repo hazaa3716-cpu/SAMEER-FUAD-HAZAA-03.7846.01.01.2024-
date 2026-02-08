@@ -185,7 +185,7 @@
 
     .menu-items {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit,minmax(260px, 1fr));
       gap: 1.5rem;
     }
 
@@ -204,17 +204,21 @@
       transform: translateY(-5px);
     }
 
-    .menu-card .image-placeholder {
-      background-color: #d2691e;
-      color: #fff8f0;
-      height: 120px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: 700;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
+   .menu-card .image-placeholder {
+  background-color: #d2691e;
+  color: #fff8f0;
+  height: 300px; /* Increased height for larger image display */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-size: cover;
+  background-position: center;
+}
+
+
 
     .menu-card h4 {
       margin-bottom: 0.5rem;
@@ -230,7 +234,6 @@
     .menu-card .rating {
       margin-bottom: 0.5rem;
       color: #ffa500;
-      font-weight: 600;
     }
 
     .menu-card button {
@@ -659,41 +662,32 @@
   </div>
 
   <script>
-    // Data for menu items with ratings, reviews, discounts, and image paths
+    // Data for menu items with ratings, reviews, discounts, and image URLs
+    // Replace 'image' values with actual online image URLs for 10 foods and 8 drinks
     const foods = [
-      { id:1, name: "Ugali", price: 3000, rating: 4.5, reviews: 120, discount: 0, image: "images/ugali.jpg" },
-      { id:2, name: "Pilau", price: 5000, rating: 4.7, reviews: 95, discount: 10, image: "images/pilau.jpg" },
-      { id:3, name: "Samosa", price: 500, rating: 4.3, reviews: 200, discount: 0, image: "images/samosa.jpg" },
-      { id:4, name: "Wali Samaki", price: 5000, rating: 4.8, reviews: 80, discount: 5, image: "images/wali-samaki.jpg" },
-      { id:5, name: "Wali wa Nazi", price: 3000, rating: 4.4, reviews: 110, discount: 0, image: "images/wali-nazi.jpg" },
-      { id:6, name: "Mahamri", price: 500, rating: 4.2, reviews: 70, discount: 0, image: "images/mahamri.jpg" },
-      { id:7, name: "Mishkaki", price: 1000, rating: 4.6, reviews: 130, discount: 15, image: "images/mishkaki.jpg" },
-      { id:8, name: "Ndizi za kuKaanga", price: 500, rating: 4.1, reviews: 60, discount: 0, image: "images/ndizi-kaanga.jpg" },
-      { id:9, name: "Kuku", price: 6000, rating: 4.7, reviews: 90, discount: 0, image: "images/kuku.jpg" },
-      { id:10, name: "Chipsi", price: 3000, rating: 4.3, reviews: 100, discount: 0, image: "images/chipsi.jpg" },
-      { id:11, name: "Nyama Choma", price: 7000, rating: 4.8, reviews: 150, discount: 0, image: "images/nyama-choma.jpg" },
-      { id:12, name: "Beans", price: 2000, rating: 4.4, reviews: 85, discount: 5, image: "images/beans.jpg" },
-      { id:13, name: "Sukuma Wiki", price: 1500, rating: 4.3, reviews: 75, discount: 0, image: "images/sukuma-wiki.jpg" },
-      { id:14, name: "Kienyeji", price: 4000, rating: 4.6, reviews: 95, discount: 0, image: "images/kienyeji.jpg" },
-      { id:15, name: "Mchuzi wa Samaki", price: 6500, rating: 4.7, reviews: 110, discount: 8, image: "images/mchuzi-samaki.jpg" },
-      { id:16, name: "Biriani", price: 5500, rating: 4.9, reviews: 140, discount: 0, image: "images/biriani.jpg" },
-      { id:17, name: "Mkate wa Kumimina", price: 1000, rating: 4.2, reviews: 60, discount: 0, image: "images/mkate-kumimina.jpg" },
-      { id:18, name: "Urojo", price: 2000, rating: 4.5, reviews: 120, discount: 10, image: "images/urojo.jpg" },
-      { id:19, name: "Maharagwe", price: 2500, rating: 4.4, reviews: 70, discount: 0, image: "images/maharagwe.jpg" },
-      { id:20, name: "Biryani ya Kuku", price: 6000, rating: 4.8, reviews: 125, discount: 5, image: "images/biryani-kuku.jpg" }
+      { id:1, name: "Ugali", price: 3000, rating: 4.5, reviews: 120, discount: 0, image: "https://i.pinimg.com/1200x/fa/8e/03/fa8e03bad48021d28a3181e5e2e4afb0.jpg" },
+      { id:2, name: "Pilau", price: 5000, rating: 4.7, reviews: 95, discount: 10, image: "https://i.pinimg.com/736x/29/90/5b/29905b5e366cf1301132177b032beebc.jpg" },
+      { id:3, name: "Samosa", price: 500, rating: 4.3, reviews: 200, discount: 0, image: "https://i.pinimg.com/736x/a8/0a/c5/a80ac5a1b93b074abdf13d64b8cb7acd.jpg" },
+      { id:4, name: "Wali Samaki", price: 5000, rating: 4.8, reviews: 80, discount: 5, image: "https://i.pinimg.com/1200x/bf/8f/6e/bf8f6e33c977e66775c3c919ad54b5b7.jpg" },
+      { id:5, name: "Wali wa Nazi", price: 3000, rating: 4.4, reviews: 110, discount: 0, image: "https://i.pinimg.com/736x/01/6f/e9/016fe95aac7d5cef1260569c85112572.jpg" },
+      { id:6, name: "Mahamri", price: 500, rating: 4.2, reviews: 70, discount: 0, image: "https://i.pinimg.com/736x/0a/bf/7f/0abf7fc2520602ec4f97f39e22cd8534.jpg" },
+      { id:7, name: "Mishkaki", price: 1000, rating: 4.6, reviews: 130, discount: 15, image: "https://i.pinimg.com/1200x/ad/6c/50/ad6c5089311d053d137e42c61b382665.jpg" },
+      { id:8, name: "Ndizi za kuKaanga", price: 500, rating: 4.1, reviews: 60, discount: 0, image: "https://i.pinimg.com/1200x/24/d0/b9/24d0b9bb0930b2ddae246b46fdc07d0e.jpg" },
+      { id:9, name: "Kuku", price: 6000, rating: 4.7, reviews: 90, discount: 0, image: "https://i.pinimg.com/1200x/1f/10/b3/1f10b3adb83e9ecdd56d2a6d1d430e9b.jpg" },
+      { id:10, name: "Chipsi", price: 3000, rating: 4.3, reviews: 100, discount: 0, image: "https://i.pinimg.com/736x/3c/54/75/3c54751cdaf44bc2f20a36ece8c4860a.jpg" }
     ];
 
     const drinks = [
-      { id:101, name: "Chai ya Tangawizi", price: 500, rating: 4.5, reviews: 150, discount: 0, image: "images/chai-tangawizi.jpg" },
-      { id:102, name: "Maji", price: 500, rating: 4.2, reviews: 90, discount: 0, image: "images/maji.jpg" },
-      { id:103, name: "Kahawa", price: 500, rating: 4.6, reviews: 120, discount: 5, image: "images/kahawa.jpg" },
-      { id:104, name: "Juice ya Matunda", price: 500, rating: 4.7, reviews: 110, discount: 0, image: "images/juice-matunda.jpg" },
-      { id:105, name: "Soda", price: 600, rating: 4.0, reviews: 80, discount: 0, image: "images/soda.jpg" },
-      { id:106, name: "Maziwa Freshi", price: 1000, rating: 4.3, reviews: 70, discount: 0, image: "images/maziwa-freshi.jpg" },
-      { id:107, name: "Milk shake", price: 2000, rating: 4.4, reviews: 65, discount: 10, image: "images/milk-shake.jpg" },
-      { id:108, name: "Maziwa mgando", price: 1000, rating: 4.5, reviews: 75, discount: 0, image: "images/maziwa-mgando.jpg" }
+      { id:101, name: "Chai ya Tangawizi", price: 500, rating: 4.5, reviews: 150, discount: 0, image: "https://i.pinimg.com/736x/91/e4/3b/91e43b0370c301a6630bf9557fb08a25.jpg" },
+      { id:102, name: "Maji", price: 500, rating: 4.2, reviews: 90, discount: 0, image: "https://i.pinimg.com/1200x/54/0f/16/540f1669b741ed4ffd0adc0e6583945c.jpg" },
+      { id:103, name: "Kahawa", price: 500, rating: 4.6, reviews: 120, discount: 5, image: "https://i.pinimg.com/736x/f8/38/17/f83817560f3c6cc3c9b311ad82517daf.jpg" },
+      { id:104, name: "Juice ya Matunda", price: 500, rating: 4.7, reviews: 110, discount: 0, image: "https://i.pinimg.com/736x/b3/3c/24/b33c24ddd7c4fe45f4bb6f71d37e32e1.jpg" },
+      { id:105, name: "Soda", price: 600, rating: 4.0, reviews: 80, discount: 0, image: "https://i.pinimg.com/1200x/79/6c/34/796c34906c9111f02f41a319298a261b.jpg" },
+      { id:106, name: "Maziwa Freshi", price: 1000, rating: 4.3, reviews: 70, discount: 0, image: "https://i.pinimg.com/736x/4e/e9/2b/4ee92bb7febf5a17825e77cd2cba416d.jpg" },
+      { id:107, name: "Milk shake", price: 2000, rating: 4.4, reviews: 65, discount: 10, image: "https://i.pinimg.com/736x/ba/c9/0d/bac90dcb464636dbad025d79c19a93e4.jpg" },
+      { id:108, name: "Maziwa mgando", price: 1000, rating: 4.5, reviews: 75, discount: 0, image: "https://i.pinimg.com/1200x/e3/0e/0a/e30e0a3070bae2b2ec7a9a6101c85b7b.jpg" }
     ];
-    
+
     // Cart data
     let cart = [];
 
@@ -770,7 +764,13 @@
       notification.style.display = 'none';
     }
 
-    // Render menu items with ratings, discounts, favorites
+    // Clear search suggestions
+    function clearSearchSuggestions() {
+      searchSuggestions.innerHTML = '';
+      searchSuggestions.style.display = 'none';
+    }
+
+    // Render menu items with ratings, discounts, favorites and images
     function renderMenuItems(filter = '') {
       function renderCard(item) {
         const discountedPrice = item.discount ? Math.round(item.price * (1 - item.discount / 100)) : item.price;
@@ -780,7 +780,7 @@
             <button class="fav-btn ${isFav ? 'favorited' : ''}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
               ${isFav ? '★' : '☆'}
             </button>
-            <div class="image-placeholder">Image</div>
+            <div class="image-placeholder" style="background-image: url('${item.image}');"></div>
             <h4>${item.name}</h4>
             <p class="price">${discountedPrice} TZS${item.discount ? ` <small style="text-decoration:line-through; color:#a0522d;">${item.price} TZS</small>` : ''}</p>
             <p class="rating">⭐ ${item.rating} (${item.reviews})</p>
@@ -1067,7 +1067,3 @@
   </script>
 </body>
 </html>
-
-
-
-
